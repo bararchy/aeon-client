@@ -15,7 +15,7 @@ class AeonClient
       puts "Exiting.."
       exit 0
     end
-    unless connection.closed?
+    loop do
       begin
         buff = gets
         connection << buff.to_s if connection
@@ -26,7 +26,7 @@ class AeonClient
   end
 
   def self.autoreader(connection)
-    unless connection.closed?
+    loop do
       begin
         buf :: UInt8[4096]
         len = connection.read(buf.to_slice)
