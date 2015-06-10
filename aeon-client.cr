@@ -1,7 +1,7 @@
 require "socket"
 require "colorize"
 require "toml"
-
+require "telnet"
 class AeonClient
 
   def self.main
@@ -35,6 +35,7 @@ class AeonClient
         if len > 0
           #STDOUT.write(buf.to_slice, len); STDOUT.flush
           data = String.new(buf.buffer, len)
+          data = Telnet::Parser.preprocess(data)
           special_read_handles(data, connection)
           STDOUT.flush
         end
